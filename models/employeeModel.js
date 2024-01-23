@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-
+// Employee schema to store data in MongoDB
 const employeeSchema = new mongoose.Schema(
   {
     fullname: {

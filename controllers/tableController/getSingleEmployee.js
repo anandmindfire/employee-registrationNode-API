@@ -1,6 +1,6 @@
 import employeeModel from "../../models/employeeModel.js";
 
-// Get details of a single employee
+// GET request get details of a single employee using its ID
 export const getSingleEmployeeDetails = async (req, res) => {
   try {
     const { employeeId } = req.params;

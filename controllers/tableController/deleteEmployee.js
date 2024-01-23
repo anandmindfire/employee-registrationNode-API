@@ -1,6 +1,6 @@
 import employeeModel from "../../models/employeeModel.js";
 
-// Delete an employee
+// DELETE request Delete an employee using its ID
 export const deleteEmployee = async (req, res) => {
   try {
     const { employeeId } = req.params;
