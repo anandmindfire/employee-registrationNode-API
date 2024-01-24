@@ -3,12 +3,13 @@ import { getAllEmployees } from "../../controllers/tableController/getallEmploye
 import { getSingleEmployeeDetails } from "../../controllers/tableController/getSingleEmployee.js";
 import { deleteEmployee } from "../../controllers/tableController/deleteEmployee.js";
 import { editEmployee } from "../../controllers/tableController/editEmployee.js";
+import { verifyToken } from "../../middleware/authMiddleware.js";
 
 //router object
 const router = express.Router();
 
 // Get all employees with pagination, sorting, and searching
-router.get("/employees", getAllEmployees);
+router.get("/employees",verifyToken, getAllEmployees);
 
 /*
 control the behavior of the GET /employees endpoint:
@@ -23,12 +24,12 @@ http://localhost:5000/api/v1/table/employees?search=john - Search for employees 
 */
 
 // Get details of a single employee
-router.get('/employees/:employeeId', getSingleEmployeeDetails);
+router.get('/employees/:employeeId',verifyToken,getSingleEmployeeDetails);
 
 // Update employee details
-router.patch('/employees/edit/:employeeId', editEmployee);
+router.patch('/employees/:employeeId',verifyToken,editEmployee);
 
 // Delete an employee
-router.delete('/employees/:employeeId', deleteEmployee);
+router.delete('/employees/:employeeId',verifyToken,deleteEmployee);
 
 export default router;
