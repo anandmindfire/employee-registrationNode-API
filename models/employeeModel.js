@@ -27,6 +27,7 @@ const employeeSchema = new mongoose.Schema(
     gender: {
       type: String,
       required: true,
+      enum: ['male', 'female','others'],
     },
     empid: {
       type: String,
@@ -35,6 +36,7 @@ const employeeSchema = new mongoose.Schema(
     role: {
       type: String,
       required: true,
+      enum: ['intern', 'developer', 'designer', 'tech lead'],
     },
     address:{
       type: String,

@@ -1,7 +1,7 @@
 import adminModel from '../../models/adminModel.js';
-import  jwt  from 'jsonwebtoken';
 import { validateAuth } from '../../helpers/validation/authValidation.js';
 import { comparePasswords } from '../../helpers/passwordHelper/hashPasswords.js';
+import { generateToken } from '../../helpers/token/generateToken.js';
 
 // Admin login
 export const loginController =  async (req, res) => {
@@ -23,9 +23,8 @@ export const loginController =  async (req, res) => {
         if (!passwordMatch) {
             return res.status(401).json({ error: 'Authentication failed' });
         }
-        const token = jwt.sign({ adminId: admin._id },process.env.JWT_SECRET, {
-        expiresIn: '1h',
-    });
+        //generate tokens
+        const token = generateToken(admin._id);
         res.status(200).json({message: 'Admin Logined successfully', token });
     } catch (error) {
         res.status(500).json({ error: 'Login failed' });

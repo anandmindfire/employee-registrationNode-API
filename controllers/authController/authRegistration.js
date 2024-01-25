@@ -13,12 +13,13 @@ export const registerController = async (req, res) => {
       if (!validationResult.success) {
         return res.status(400).json(validationResult);
       }
-  
+      
+      //hash your passwords
       const hashedPassword = await hashPassword(password);
       const admin = new adminModel({ username, password: hashedPassword });
       await admin.save();
   
-      res.status(201).json({ message: 'Admin registered successfully', admin });
+      res.status(201).json({ message: 'Admin registered successfully', username: admin.username });
     } catch (error) {
       console.error(error);
       res.status(500).json({ error: 'Registration failed' });

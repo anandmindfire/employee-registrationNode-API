@@ -17,7 +17,22 @@ export const getAllEmployees = async (req, res) => {
     // Pagination
     const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 10;
+      
+    // Validate that page is a positive integer
+    if (!Number.isInteger(page) || page < 1) {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid page parameter. It must be a positive integer.',
+      });
+    }
 
+    // Validate that limit is a positive integer
+    if (!Number.isInteger(limit) || limit < 1) {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid limit parameter. It must be a positive integer.',
+      });
+    }
     // Sorting
     const sortField = req.query.sortBy || 'fullname';
     const sortOrder = req.query.order === 'desc' ? -1 : 1;
@@ -32,9 +47,9 @@ export const getAllEmployees = async (req, res) => {
     const allEmployees = await employeeModel
     .find({
         $or: [
-          { fullname: { $regex: keyword, $options: 'i' } }, // Case-insensitive substring match
+          { fullname: { $regex: keyword, $options: 'i' } }, // substring match
         //   { email: { $regex: keyword, $options: 'i' } },
-          // Add more fields for searching as needed
+          
         ],
       })
       .sort({ [sortField]: sortOrder })
