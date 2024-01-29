@@ -15,11 +15,12 @@ http://localhost:5000/api/v1/table/employees?search=john - Search for employees 
 export const getAllEmployees = async (req, res) => {
   try {
     // Pagination
+    const TotalEmployee= await employeeModel.countDocuments();
     const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 10;
       
     // Validate that page is a positive integer
-    if (!Number.isInteger(page) || page < 1) {
+    if (!Number.isInteger(page) || page < 1) { 
       return res.status(400).json({
         success: false,
         message: 'Invalid page parameter. It must be a positive integer.',
@@ -59,6 +60,7 @@ export const getAllEmployees = async (req, res) => {
     res.status(200).json({
       success: true,
       message: 'All employees retrieved successfully',
+      TotalEmployee,
       employees: allEmployees,
     });
   } catch (error) {

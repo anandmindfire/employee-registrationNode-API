@@ -14,6 +14,7 @@ export const addnewEmployee = async (req, res) => {
 
     // Check for existing user
     const existingUser = await employeeModel.findOne({ email });
+    const createdByUser = req.user;
 
     if (existingUser) {
       return res.status(200).send({
@@ -33,6 +34,7 @@ export const addnewEmployee = async (req, res) => {
       empid,
       role,
       address,
+      createdBy: createdByUser._id,
     }).save();
 
     res.status(201).send({

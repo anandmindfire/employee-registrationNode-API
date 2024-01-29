@@ -3,6 +3,12 @@ import express from "express";
 import { registerController } from "../../controllers/authController/authRegistration.js";
 import { loginController } from "../../controllers/authController/authLogin.js";
 
+import {
+  getUsers,
+  updateUser,
+  deleteUser,
+} from "../../controllers/authController/UserController.js";
+
 // router object
 const router = express.Router();
 
@@ -44,7 +50,7 @@ const router = express.Router();
  */
 
 // admin registration || METHOD POST
-    router.post("/register", registerController);
+router.post("/register", registerController);
 
 /**
  * @swagger
@@ -77,6 +83,14 @@ const router = express.Router();
  */
 
 // Admin Login route
-    router.post("/login", loginController);
+router.post("/login", loginController);
+
+router.get("/users", getUsers);
+
+// PUT request to update user information
+router.put("/users/:id", updateUser);
+
+// DELETE request to delete a user
+router.delete("/users/:id", deleteUser);
 
 export default router;
